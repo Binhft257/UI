@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class SearchFormFactory {
-    public static GridPane create(Consumer<List<Product>> onSearch) {
+    public static GridPane create(Consumer<Map<String, String>> onSearch) {
         GridPane form = new GridPane();
         form.getStyleClass().add("search-form");
 
@@ -31,13 +31,14 @@ public class SearchFormFactory {
         TextField os = new TextField(); os.setPromptText("os");
         TextField storage = new TextField(); storage.setPromptText("storage");
 
+        // ⛔ Label hiện lỗi
         Label brandError = new Label();
         brandError.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
 
         Button searchBtn = new Button("Search");
 
         form.addRow(0, new Label("Brand:"), brand);
-        form.add(brandError, 1, 1);
+        form.add(brandError, 1, 1);  // Dòng dưới brand
         form.addRow(2, new Label("Price From:"), priceFrom);
         form.addRow(3, new Label("Price To:"), priceTo);
         form.addRow(4, new Label("CPU:"), cpu);
@@ -66,12 +67,13 @@ public class SearchFormFactory {
             if (!os.getText().isBlank()) params.put("os", os.getText().trim());
             if (!storage.getText().isBlank()) params.put("storage", storage.getText().trim());
 
+            // 🧠 Gọi API và xử lý lỗi
             new Thread(() -> {
                 try {
                     List<Product> result = ProductClient.fetchWithParams(params);
                     Platform.runLater(() -> {
-                        brandError.setText("");
-                        onSearch.accept(result); // Gửi danh sách sản phẩm về giao diện
+                        brandError.setText(""); // xoá lỗi cũ nếu có
+                        onSearch.accept(params); // gọi search callback nếu không lỗi
                     });
                 } catch (Exception exx) {
                     Platform.runLater(() -> {

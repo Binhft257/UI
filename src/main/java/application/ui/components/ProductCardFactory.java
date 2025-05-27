@@ -5,17 +5,17 @@ import application.model.Review;
 import application.ui.common.LabelFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,8 +32,8 @@ public class ProductCardFactory {
         try {
             HttpURLConnection hc = (HttpURLConnection) new URL(raw).openConnection();
             hc.setRequestProperty("User-Agent",
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                            + "(KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+                    "(KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
             if (hc.getResponseCode() == 200) {
                 try (InputStream is = hc.getInputStream()) {
                     iv.setImage(new Image(is, 270, 180, true, true));
@@ -65,14 +65,16 @@ public class ProductCardFactory {
         Label price = new Label("Giá: " + priceText);
         price.getStyleClass().add("product-price");
 
+        // Thêm 3 phần tử chính
         card.getChildren().addAll(iv, name, price);
 
-        // Hover nodes
+        // Chi tiết hover
         Node[] details = LabelFactory.revealLabel(product);
         for (Node detail : details) {
             detail.getStyleClass().add("product-detail");
         }
 
+        // Đánh giá nếu có
         VBox reviewBox = null;
         if (product.reviews != null && !product.reviews.isEmpty()) {
             reviewBox = new VBox(5);
@@ -90,19 +92,19 @@ public class ProductCardFactory {
             }
         }
 
-        Button cartBtn = new Button("Add To Cart");
-        cartBtn.getStyleClass().add("add-to-cart-button");
+        // Tạo list hover nodes, tránh lỗi kiểu khi dùng Arrays.asList
+        List<Node> hoverNodes = new ArrayList<>();
+        Collections.addAll(hoverNodes, details);
+        if (reviewBox != null) {
+            hoverNodes.add(reviewBox);
+        }
 
-        List<Node> hoverNodes = new ArrayList<>(Arrays.asList(details));
-        if (reviewBox != null) hoverNodes.add(reviewBox);
-        hoverNodes.add(cartBtn);
         Node[] nodes = hoverNodes.toArray(new Node[0]);
         showDetail(false, nodes);
-
         card.setOnMouseEntered(e -> showDetail(true, nodes));
         card.setOnMouseExited(e -> showDetail(false, nodes));
-
         card.getChildren().addAll(nodes);
+
         return card;
     }
 

@@ -7,8 +7,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
+/**
+ * NavBarFactory cung cấp thanh điều hướng với logo và nút Home.
+ * Nút Home khi được nhấn sẽ gọi lại callback onHome để hiển thị lại 50 sản phẩm ban đầu.
+ */
 public class NavBarFactory {
-    public static HBox createNavBar() {
+    public static HBox createNavBar(Runnable onHome) {
         HBox navBar = new HBox(20);
         navBar.setAlignment(Pos.CENTER_LEFT);
         navBar.getStyleClass().add("nav-bar");
@@ -20,13 +24,10 @@ public class NavBarFactory {
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         Button homeButton = new Button("Home");
-        Button searchButton = new Button("Search");
+        homeButton.getStyleClass().add("nav-button");
+        homeButton.setOnAction(e -> onHome.run());
 
-        for (Button btn : new Button[]{homeButton, searchButton}) {
-            btn.getStyleClass().add("nav-button");
-        }
-
-        navBar.getChildren().addAll(logo, spacer, homeButton, searchButton);
+        navBar.getChildren().addAll(logo, spacer, homeButton);
         return navBar;
     }
 }

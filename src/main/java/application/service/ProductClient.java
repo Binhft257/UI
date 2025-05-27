@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import application.model.Product;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -13,17 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductClient {
+    private static final String BASE_URL = "http://localhost:8081/api/building";
 
-    // GET all
-    public static List<Product> fetchProducts() {
-        return fetchWithParams(Collections.emptyMap());
-    }
-
-    // GET with params
-    public static List<Product> fetchWithParams(Map<String, String> params) {
+    public static int fetchTotalCount(Map<String, String> params) {
         try {
-            // 🔧 Build URL
-            StringBuilder sb = new StringBuilder("http://localhost:8081/api/building/");
+            StringBuilder sb = new StringBuilder(BASE_URL.replaceAll("/$", ""))
+                .append("/count");
+
             if (params != null && !params.isEmpty()) {
                 sb.append("?");
                 for (Map.Entry<String, String> e : params.entrySet()) {
@@ -32,35 +30,57 @@ public class ProductClient {
                       .append(URLEncoder.encode(e.getValue(), "UTF-8"))
                       .append("&");
                 }
-                sb.deleteCharAt(sb.length() - 1); // remove last &
+                sb.deleteCharAt(sb.length() - 1);
             }
 
-            // 🌐 Open connection
             URL url = new URL(sb.toString());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            conn.setConnectTimeout(30000);
+            conn.setReadTimeout(30000);
 
-            // ⏱ Set timeout to speed up or prevent freezing
-            conn.setConnectTimeout(30000); // 3s timeout
-            conn.setReadTimeout(30000);    // 5s read timeout
+            try (InputStream in = conn.getInputStream();
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+                String line = reader.readLine();
+                return Integer.parseInt(line.trim());
+            }
+        } catch (Exception ex) {
+            System.err.println("❌ Lỗi khi lấy tổng số sản phẩm:");
+            ex.printStackTrace();
+            return 0;
+        }
+    }
 
-            // 📥 Read response
-            try (InputStream in = conn.getInputStream()) {
-                ObjectMapper mapper = new ObjectMapper();
-                List<Product> all = mapper.readValue(in, new TypeReference<List<Product>>() {});
+    public static List<Product> fetchProducts() {
+        return fetchWithParams(Collections.emptyMap());
+    }
 
-                // 📢 Print all products
-                System.out.println("📦 Đã tải " + all.size() + " sản phẩm:");
-                for (Product p : all) {
-                    System.out.println("→ " + (p.model != null ? p.model : "No model")
-                                     + " | Brand: " + p.brand
-                                     + " | CPU: " + p.cpu
-                                     + " | Price: " + p.price);
+    public static List<Product> fetchWithParams(Map<String, String> params) {
+        try {
+            StringBuilder sb = new StringBuilder(BASE_URL);
+            if (params != null && !params.isEmpty()) {
+                sb.append("?");
+                for (Map.Entry<String, String> e : params.entrySet()) {
+                    sb.append(URLEncoder.encode(e.getKey(), "UTF-8"))
+                      .append("=")
+                      .append(URLEncoder.encode(e.getValue(), "UTF-8"))
+                      .append("&");
                 }
-
-                return all;
+                sb.deleteCharAt(sb.length() - 1);
             }
 
+            URL url = new URL(sb.toString());
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(100000);
+            conn.setReadTimeout(100000);
+
+            try (InputStream in = conn.getInputStream()) {
+                ObjectMapper mapper = new ObjectMapper();
+                List<Product> list = mapper.readValue(in, new TypeReference<List<Product>>() {});
+                System.out.println("📦 Đã tải " + list.size() + " sản phẩm");
+                return list;
+            }
         } catch (Exception ex) {
             System.err.println("❌ Lỗi khi tải sản phẩm:");
             ex.printStackTrace();
