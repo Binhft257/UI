@@ -1,0 +1,311 @@
+/* HeroSectionFactory */
+.hero-section {
+   -fx-background-color: linear-gradient(to bottom right, #2a2a2a, #101010);
+   -fx-padding: 30 50 30 50;
+   -fx-alignment: center-left;
+   -fx-spacing: 15;
+}
+
+.hero-title {
+   -fx-font-family: Arial;
+   -fx-font-size: 36;
+   -fx-font-weight: bold;
+   -fx-text-fill: white;
+   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 3, 0, 0, 1);
+}
+
+.hero-subtitle {
+   -fx-font-family: Arial;
+   -fx-font-size: 16;
+   -fx-text-fill: lightgray;
+   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 2, 0, 0, 1);
+}
+
+/* NavBarFactory */
+.nav-bar {
+   -fx-background-color: #222222;
+   -fx-padding: 15 20 15 20;
+   -fx-alignment: center-left;
+   -fx-spacing: 20;
+}
+
+.nav-logo {
+   -fx-font-family: Arial;
+   -fx-font-size: 28;
+   -fx-font-weight: bold;
+   -fx-text-fill: #ff4500;
+   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 1);
+}
+
+.nav-button {
+   -fx-background-color: transparent;
+   -fx-text-fill: white;
+   -fx-font-size: 14;
+}
+
+.nav-button:hover {
+   -fx-background-color: #cc0000;
+   -fx-text-fill: white;
+}
+
+/* ProductCardFactory */
+.product-card {
+   -fx-background-color: white;
+   -fx-border-color: #ddd;
+   -fx-border-width: 1;
+   -fx-border-radius: 5;
+   -fx-background-radius: 5;
+   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 3);
+   -fx-padding: 15;
+   -fx-alignment: center-left;
+   -fx-spacing: 10;
+   -fx-pref-width: 300;
+}
+
+.product-card:hover {
+   -fx-scale-x: 1.05;
+   -fx-scale-y: 1.05;
+   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 15, 0, 0, 0);
+}
+
+.product-name {
+   -fx-font-family: Arial;
+   -fx-font-size: 16;
+   -fx-font-weight: bold;
+   -fx-text-fill: #333;
+   -fx-wrap-text: true;
+}
+
+.product-price {
+   -fx-font-family: Arial;
+   -fx-font-size: 14;
+   -fx-text-fill: #cc0000;
+   -fx-wrap-text: true;
+}
+
+.product-detail {
+   -fx-font-family: Arial;
+   -fx-font-size: 14;
+   -fx-text-fill: #444;
+   -fx-wrap-text: true;
+}
+
+.review-title {
+   -fx-font-weight: bold;
+}
+
+.review-text {
+   -fx-font-size: 12;
+   -fx-wrap-text: true;
+}
+
+.add-to-cart-button {
+   -fx-background-color: #555;
+   -fx-text-fill: white;
+   -fx-font-weight: bold;
+   -fx-pref-width: 270;
+}
+
+/* Main */
+.search-button {
+   -fx-background-color: #ff4500;
+   -fx-text-fill: white;
+}
+
+.filter-button {
+   -fx-background-color: #444;
+   -fx-text-fill: white;
+}
+
+.chat-button {
+   -fx-background-color: #6c5ce7;
+   -fx-text-fill: white;
+   -fx-font-weight: bold;
+}
+
+.chat-button:hover {
+   -fx-background-color: #5a4fcf;
+}
+
+.filter-panel {
+   -fx-background-color: #f0f0f0;
+   -fx-border-color: #ddd;
+   -fx-padding: 10;
+   -fx-spacing: 10;
+   -fx-pref-width: 300;
+}
+
+/* ProductGridFactory */
+.product-grid {
+   -fx-hgap: 20;
+   -fx-vgap: 20;
+   -fx-padding: 20;
+   -fx-alignment: top-center;
+}
+
+/* SearchFormFactory */
+.search-form {
+   -fx-hgap: 10;
+   -fx-vgap: 10;
+   -fx-padding: 10;
+}
+
+/* Chatbot Panel Styles */
+.chatbot-panel {
+   -fx-background-color: white;
+   -fx-border-color: #e0e0e0;
+   -fx-border-width: 1;
+   -fx-border-radius: 15;
+   -fx-background-radius: 15;
+   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);
+   -fx-pref-width: 350;
+   -fx-max-width: 350;
+   -fx-min-width: 350;
+   -fx-pref-height: 600;
+   -fx-max-height: 600;
+   -fx-spacing: 0;
+}
+
+.chatbot-header {
+   -fx-background-color: linear-gradient(to right, #6c5ce7, #a29bfe);
+   -fx-padding: 15 20 15 20;
+   -fx-background-radius: 15 15 0 0;
+}
+
+.chatbot-avatar {
+   -fx-font-size: 24;
+}
+
+.chatbot-title {
+   -fx-font-family: Arial;
+   -fx-font-size: 14;
+   -fx-font-weight: bold;
+   -fx-text-fill: white;
+}
+
+.chatbot-subtitle {
+   -fx-font-family: Arial;
+   -fx-font-size: 11;
+   -fx-text-fill: rgba(255,255,255,0.8);
+}
+
+.messages-container {
+   -fx-padding: 15;
+   -fx-spacing: 10;
+}
+
+.messages-scroll {
+   -fx-background-color: #f8f9fa;
+   -fx-border-color: transparent;
+   -fx-padding: 0;
+   -fx-pref-height: 400;
+}
+
+.messages-scroll .viewport {
+   -fx-background-color: #f8f9fa;
+}
+
+.messages-scroll .scroll-bar:vertical {
+   -fx-background-color: transparent;
+   -fx-pref-width: 8;
+}
+
+.messages-scroll .scroll-bar:vertical .track {
+   -fx-background-color: rgba(0,0,0,0.1);
+   -fx-background-radius: 4;
+}
+
+.messages-scroll .scroll-bar:vertical .thumb {
+   -fx-background-color: rgba(0,0,0,0.3);
+   -fx-background-radius: 4;
+}
+
+/* Chat Bubble Styles */
+.user-bubble {
+   -fx-background-color: #6c5ce7;
+   -fx-background-radius: 18 18 5 18;
+   -fx-max-width: 250;
+}
+
+.bot-bubble {
+   -fx-background-color: white;
+   -fx-border-color: #e0e0e0;
+   -fx-border-width: 1;
+   -fx-border-radius: 18 18 18 5;
+   -fx-background-radius: 18 18 18 5;
+   -fx-max-width: 250;
+}
+
+.chat-message-text {
+   -fx-font-family: Arial;
+   -fx-font-size: 13;
+   -fx-wrap-text: true;
+}
+
+.user-bubble .chat-message-text {
+   -fx-text-fill: white;
+}
+
+.bot-bubble .chat-message-text {
+   -fx-text-fill: #333;
+}
+
+.chat-time {
+   -fx-font-family: Arial;
+   -fx-font-size: 10;
+   -fx-text-fill: rgba(0,0,0,0.5);
+}
+
+.user-bubble .chat-time {
+   -fx-text-fill: rgba(255,255,255,0.7);
+}
+
+.typing-indicator {
+   -fx-text-fill: #666;
+   -fx-font-style: italic;
+}
+
+.chat-input-area {
+   -fx-background-color: white;
+   -fx-padding: 15 20 20 20;
+   -fx-background-radius: 0 0 15 15;
+   -fx-border-color: #e0e0e0;
+   -fx-border-width: 1 0 0 0;
+}
+
+.chat-input {
+   -fx-background-color: #f8f9fa;
+   -fx-border-color: #e0e0e0;
+   -fx-border-width: 1;
+   -fx-border-radius: 25;
+   -fx-background-radius: 25;
+   -fx-padding: 10 15 10 15;
+   -fx-font-family: Arial;
+   -fx-font-size: 13;
+}
+
+.chat-input:focused {
+   -fx-border-color: #6c5ce7;
+   -fx-border-width: 2;
+}
+
+.send-button {
+   -fx-background-color: #6c5ce7;
+   -fx-text-fill: white;
+   -fx-font-size: 16;
+   -fx-font-weight: bold;
+   -fx-padding: 10 15 10 15;
+   -fx-background-radius: 25;
+   -fx-cursor: hand;
+   -fx-min-width: 45;
+   -fx-pref-width: 45;
+}
+
+.send-button:hover {
+   -fx-background-color: #5a4fcf;
+}
+
+.send-button:disabled {
+   -fx-background-color: #bbb;
+   -fx-cursor: default;
+}
